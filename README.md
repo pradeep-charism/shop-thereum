@@ -1,1 +1,1 @@
-# shop-thereum
+# ethereum-pets-trading
