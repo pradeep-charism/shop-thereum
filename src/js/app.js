@@ -4,20 +4,20 @@ App = {
 
   init: async function () {
     $.getJSON('../shop-items.json', function (data) {
-      var petsRow = $('#petsRow');
-      var petTemplate = $('#petTemplate');
+      var shopsRow = $('#shopsRow');
+      var shopTemplate = $('#shopTemplate');
 
       for (i = 0; i < data.length; i++) {
-        petTemplate.find('.panel-title').text(data[i].name);
-        petTemplate.find('img').attr('src', data[i].picture);
-        petTemplate.find('.pet-desc').text(data[i].desc);
-        petTemplate.find('.pet-cost').text(data[i].cost);
-        petTemplate.find('.pet-location').text(data[i].location);
-        petTemplate.find('.btn-adopt').attr('data-id', data[i].id);
-        petTemplate.find('.btn-release').attr('data-id', data[i].id).attr('disabled', true);
+        shopTemplate.find('.panel-title').text(data[i].name);
+        shopTemplate.find('img').attr('src', data[i].picture);
+        shopTemplate.find('.shop-desc').text(data[i].desc);
+        shopTemplate.find('.shop-cost').text(data[i].cost);
+        shopTemplate.find('.shop-location').text(data[i].location);
+        shopTemplate.find('.btn-adopt').attr('data-id', data[i].id);
+        shopTemplate.find('.btn-release').attr('data-id', data[i].id).attr('disabled', true);
 
 
-        petsRow.append(petTemplate.html());
+        shopsRow.append(shopTemplate.html());
       }
     });
 
@@ -71,8 +71,8 @@ App = {
     }).then(function (adopters) {
       for (i = 0; i < adopters.length; i++) {
         if (adopters[i] !== '0x0000000000000000000000000000000000000000') {
-          $('.panel-pet').eq(i).find('.btn-adopt').text('Adopted').attr('disabled', true);
-          $('.panel-pet').eq(i).find('.btn-release').text('Release').attr('disabled', false);
+          $('.panel-shop').eq(i).find('.btn-adopt').text('Adopted').attr('disabled', true);
+          $('.panel-shop').eq(i).find('.btn-release').text('Release').attr('disabled', false);
         }
       }
     }).catch(function (err) {
@@ -83,7 +83,7 @@ App = {
   handleAdopt: function (event) {
     event.preventDefault();
 
-    var petId = parseInt($(event.target).data('id'));
+    var shopId = parseInt($(event.target).data('id'));
 
 
     var adoptionInstance;
@@ -94,7 +94,7 @@ App = {
       var account = accounts[0];
       App.contracts.Adoption.deployed().then(function (instance) {
         adoptionInstance = instance;
-        return adoptionInstance.adopt(petId, { from: account });
+        return adoptionInstance.adopt(shopId, { from: account });
       }).then(function (result) {
         return App.markAdopted();
       }).catch(function (err) {
@@ -112,8 +112,8 @@ App = {
     }).then(function (adopters) {
       for (i = 0; i < adopters.length; i++) {
         if (adopters[i] === '0x0000000000000000000000000000000000000000') {
-          $('.panel-pet').eq(i).find('.btn-adopt').text('Adopt').attr('disabled', false);
-          $('.panel-pet').eq(i).find('.btn-release').text('Released').attr('disabled', true);
+          $('.panel-shop').eq(i).find('.btn-adopt').text('Adopt').attr('disabled', false);
+          $('.panel-shop').eq(i).find('.btn-release').text('Released').attr('disabled', true);
         }
       }
     }).catch(function (err) {
@@ -124,7 +124,7 @@ App = {
   handleRelease: function (event) {
     event.preventDefault();
 
-    var petId = parseInt($(event.target).data('id'));
+    var shopId = parseInt($(event.target).data('id'));
 
 
     var adoptionInstance;
@@ -135,7 +135,7 @@ App = {
       var account = accounts[0];
       App.contracts.Adoption.deployed().then(function (instance) {
         adoptionInstance = instance;
-        return adoptionInstance.release(petId, { from: account });
+        return adoptionInstance.release(shopId, { from: account });
       }).then(function (result) {
         return App.markReleased();
       }).catch(function (err) {
