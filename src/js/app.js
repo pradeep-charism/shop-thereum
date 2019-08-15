@@ -71,8 +71,8 @@ App = {
     }).then(function (adopters) {
       for (i = 0; i < adopters.length; i++) {
         if (adopters[i] !== '0x0000000000000000000000000000000000000000') {
-          $('.panel-shop').eq(i).find('.btn-adopt').text('Adopted').attr('disabled', true);
-          $('.panel-shop').eq(i).find('.btn-release').text('Release').attr('disabled', false);
+          $('.panel-shop').eq(i).find('.btn-adopt').text('Buy').attr('disabled', true);
+          $('.panel-shop').eq(i).find('.btn-release').text('Sell').attr('disabled', false);
         }
       }
     }).catch(function (err) {
@@ -94,7 +94,7 @@ App = {
       var account = accounts[0];
       App.contracts.Adoption.deployed().then(function (instance) {
         adoptionInstance = instance;
-        return adoptionInstance.adopt(shopId, { from: account });
+        return adoptionInstance.adopt(shopId, { from: account, data: shopId });
       }).then(function (result) {
         return App.markAdopted();
       }).catch(function (err) {
@@ -112,8 +112,8 @@ App = {
     }).then(function (adopters) {
       for (i = 0; i < adopters.length; i++) {
         if (adopters[i] === '0x0000000000000000000000000000000000000000') {
-          $('.panel-shop').eq(i).find('.btn-adopt').text('Adopt').attr('disabled', false);
-          $('.panel-shop').eq(i).find('.btn-release').text('Released').attr('disabled', true);
+          $('.panel-shop').eq(i).find('.btn-adopt').text('Buy').attr('disabled', false);
+          $('.panel-shop').eq(i).find('.btn-release').text('Sell').attr('disabled', true);
         }
       }
     }).catch(function (err) {
