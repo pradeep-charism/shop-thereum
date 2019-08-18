@@ -40,7 +40,7 @@ App = {
     else {
       App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
     }
-    vr web3 = new Web3(App.web3Provider);
+    var web3 = new Web3(App.web3Provider);
 
     return App.initContract();
   },
