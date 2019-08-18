@@ -7,7 +7,7 @@ App = {
       var shopsRow = $('#shopsRow');
       var shopTemplate = $('#shopTemplate');
 
-      for (i = 0; i < data.length; i++) {
+      for (let i = 0; i < data.length; i++) {
         shopTemplate.find('.panel-title').text(data[i].name);
         shopTemplate.find('img').attr('src', data[i].picture);
         shopTemplate.find('.shop-desc').text(data[i].desc);
@@ -40,7 +40,7 @@ App = {
     else {
       App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
     }
-    web3 = new Web3(App.web3Provider);
+    vr web3 = new Web3(App.web3Provider);
 
     return App.initContract();
   },
