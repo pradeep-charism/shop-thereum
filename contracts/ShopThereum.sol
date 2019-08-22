@@ -1,9 +1,11 @@
 pragma solidity ^0.5.0;
+import "./SafeMath.sol";
 
 contract ShopThereum {
+    using SafeMath for uint;
 
-    address payable private _shopAdminWallet = 0xfc9A0930297Fb5c497CE8C5E8b8a06b72dd70834;
-    address payable private _safeWallet = 0xEeCe46429eC8e26cc6FC514d5D2a69A152E8485E;
+    address payable private _shopAdminWallet = 0xAdDf5CC6A9cBfdF00095D27600cB02b6605431D3;
+    address payable private _safeWallet = 0xae8b4DE1c4575Eaac4a3182CB94401bDD022DeD8;
     address payable private _buyerWallet;
     address[16] public products;
 
@@ -27,8 +29,10 @@ contract ShopThereum {
     function buy(uint productId) public payable returns (uint) {
         require(productId >= 0 && productId <= 15);
         products[productId] = msg.sender;
+//        _balances[msg.sender] = _balances[msg.sender].add(msg.value);
+//        _balances[_shopAdminWallet] = _balances[_shopAdminWallet].add(msg.value);
 //        _shopAdminWallet.transfer(msg.value);
-        _safeWallet.transfer(msg.value);
+//        _safeWallet.transfer(msg.value);
         emit BuyEvent(msg.sender, productId);
         return productId;
     }
@@ -36,7 +40,9 @@ contract ShopThereum {
     function sell(uint productId) public payable returns (uint) {
         require(productId >= 0 && productId <= 15);
         delete products[productId];
-        _shopAdminWallet.transfer(msg.value);
+//        _balances[msg.sender] = _balances[msg.sender].add(msg.value);
+//        _balances[_shopAdminWallet] = _balances[_shopAdminWallet].sub(msg.value);
+//        _shopAdminWallet.transfer(msg.value);
 //        _buyerWallet.transfer(msg.value);
 //        _safeWallet.transfer(msg.value);
 //        _balances[_buyerWallet]=msg.value;
